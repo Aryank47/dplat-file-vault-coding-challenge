@@ -10,6 +10,7 @@ if [ "$RUN_MAKEMIGRATIONS" = "1" ]; then
   echo "Running makemigrations..."
   python manage.py makemigrations
 fi
+python manage.py migrate
 
 # Start server
 echo "Starting server..."
