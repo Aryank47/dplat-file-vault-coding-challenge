@@ -1,0 +1,16 @@
+# Python artifacts
+__pycache__/
+*.py[cod]
+
+# Environment directories
+venv/
+env/
+
+# Compiled static files
+staticfiles/
+
+# SQLite database
+*.sqlite3
+
+# Windows Zone Identifier metadata files
+*:[Zz]one.Identifier
