@@ -7,7 +7,7 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from files.models import File
 
 
-@override_settings(MEDIA_ROOT=tempfile.mkdtemp())
+@override_settings(MEDIA_ROOT=tempfile.mkdtemp(), API_CALL_LIMIT=1000, API_CALL_PERIOD=1)
 class FileAPITestCase(APITestCase):
     def test_upload_file(self):
         url = reverse('file-list')

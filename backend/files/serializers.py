@@ -6,6 +6,9 @@ class FileSerializer(serializers.ModelSerializer):
         model = File
         fields = [
             'id', 'file', 'original_filename', 'file_type', 'size',
-            'uploaded_at', 'duplicate_of', 'uploaded_by'
+            'uploaded_at', 'duplicate_of', 'uploaded_by', 'hash'
         ]
         read_only_fields = ['id', 'uploaded_at', 'duplicate_of', 'uploaded_by']
+        extra_kwargs = {
+            'hash': {'write_only': True}
+        }
