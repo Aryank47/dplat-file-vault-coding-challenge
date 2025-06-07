@@ -94,7 +94,7 @@ docker-compose up --build
 ## 🗄️ Project Structure
 
 ```
-file-hub/
+dplat-file-vault-coding-challenge/
 ├── backend/                # Django backend
 │   ├── files/             # Main application
 │   │   ├── models.py      # Data models
