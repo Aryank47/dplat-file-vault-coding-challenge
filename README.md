@@ -112,6 +112,15 @@ dplat-file-vault-coding-challenge/
 - Django Debug Toolbar for debugging
 - SQLite for easy development
 
+## 🧪 Running Tests
+
+To run the backend test suite:
+
+```bash
+cd backend
+python manage.py test
+```
+
 ## 🐛 Troubleshooting
 
 1. **Port Conflicts**
