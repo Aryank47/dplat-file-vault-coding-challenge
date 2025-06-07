@@ -94,7 +94,7 @@ docker-compose up --build
 ## 🗄️ Project Structure
 
 ```
-file-hub/
+dplat-file-vault-coding-challenge/
 ├── backend/                # Django backend
 │   ├── files/             # Main application
 │   │   ├── models.py      # Data models
@@ -111,6 +111,15 @@ file-hub/
 - Hot reloading for backend development
 - Django Debug Toolbar for debugging
 - SQLite for easy development
+
+## 🧪 Running Tests
+
+To run the backend test suite:
+
+```bash
+cd backend
+python manage.py test
+```
 
 ## 🐛 Troubleshooting
 
