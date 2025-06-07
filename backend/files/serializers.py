@@ -4,5 +4,8 @@ from .models import File
 class FileSerializer(serializers.ModelSerializer):
     class Meta:
         model = File
-        fields = ['id', 'file', 'original_filename', 'file_type', 'size', 'uploaded_at']
-        read_only_fields = ['id', 'uploaded_at'] 
+        fields = [
+            'id', 'file', 'original_filename', 'file_type', 'size',
+            'uploaded_at', 'duplicate_of', 'uploaded_by'
+        ]
+        read_only_fields = ['id', 'uploaded_at', 'duplicate_of', 'uploaded_by']

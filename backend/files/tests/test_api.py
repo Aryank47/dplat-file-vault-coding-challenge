@@ -12,7 +12,7 @@ class FileAPITestCase(APITestCase):
     def test_upload_file(self):
         url = reverse('file-list')
         upload = SimpleUploadedFile('test.txt', b'hello', content_type='text/plain')
-        response = self.client.post(url, {'file': upload}, format='multipart')
+        response = self.client.post(url, {'file': upload}, format='multipart', HTTP_UserId='user1')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(File.objects.count(), 1)
         self.assertEqual(File.objects.first().original_filename, 'test.txt')
@@ -31,6 +31,22 @@ class FileAPITestCase(APITestCase):
             size=1
         )
         url = reverse('file-list')
-        response = self.client.get(url)
+        response = self.client.get(url, HTTP_UserId='user1')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 2)
+
+    def test_deduplication(self):
+        url = reverse('file-list')
+        upload1 = SimpleUploadedFile('dup1.txt', b'same', content_type='text/plain')
+        upload2 = SimpleUploadedFile('dup2.txt', b'same', content_type='text/plain')
+        self.client.post(url, {'file': upload1}, format='multipart', HTTP_UserId='user1')
+        self.client.post(url, {'file': upload2}, format='multipart', HTTP_UserId='user1')
+        self.assertEqual(File.objects.count(), 2)
+        self.assertEqual(File.objects.filter(duplicate_of__isnull=True).count(), 1)
+
+    def test_storage_limit(self):
+        url = reverse('file-list')
+        with override_settings(USER_STORAGE_LIMIT_MB=0):
+            upload = SimpleUploadedFile('big.txt', b'a'*1024, content_type='text/plain')
+            response = self.client.post(url, {'file': upload}, format='multipart', HTTP_UserId='user1')
+            self.assertEqual(response.status_code, 429)
