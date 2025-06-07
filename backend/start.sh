@@ -6,7 +6,6 @@ chmod -R 777 /app/data
 
 # Run migrations
 echo "Running migrations..."
-python manage.py makemigrations
 python manage.py migrate
 
 # Start server
