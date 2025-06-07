@@ -142,4 +142,12 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.MultiPartParser',
         'rest_framework.parsers.FormParser',
     ],
+    'DEFAULT_THROTTLE_CLASSES': [
+        'files.throttling.UserIdRateThrottle',
+    ],
 }
+
+# Rate limit and storage quota settings
+API_CALL_LIMIT = int(os.environ.get('API_CALL_LIMIT', '2'))
+API_CALL_PERIOD = int(os.environ.get('API_CALL_PERIOD', '1'))
+USER_STORAGE_LIMIT_MB = int(os.environ.get('USER_STORAGE_LIMIT_MB', '10'))
