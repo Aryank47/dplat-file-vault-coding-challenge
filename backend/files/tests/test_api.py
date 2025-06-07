@@ -50,3 +50,13 @@ class FileAPITestCase(APITestCase):
             upload = SimpleUploadedFile('big.txt', b'a'*1024, content_type='text/plain')
             response = self.client.post(url, {'file': upload}, format='multipart', HTTP_UserId='user1')
             self.assertEqual(response.status_code, 429)
+
+    @override_settings(API_CALL_LIMIT=1, API_CALL_PERIOD=1)
+    def test_rate_limit_exceeded(self):
+        url = reverse('file-list')
+        # First request within limit
+        self.client.get(url, HTTP_UserId='rateuser')
+        # Second request exceeds the configured limit
+        response = self.client.get(url, HTTP_UserId='rateuser')
+        self.assertEqual(response.status_code, 429)
+        self.assertTrue(str(response.data['detail']).startswith('Call Limit Reached'))
